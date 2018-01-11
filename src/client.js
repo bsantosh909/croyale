@@ -11,7 +11,6 @@ class Client {
      * @typedef {object} RequestOptions
      * @property {Array<string>} [keys] The keys to get in the response from the API.
      * @property {Array<string>} [exclude] The keys to exclude in the response from the API.
-     * @memberof Client
      */
 
 	/**
@@ -141,6 +140,47 @@ class Client {
 		const { body } = await get(`http://api.cr-api.com/top/clans${locationKey ? `/${locationKey}` : ''}`)
 			.set('auth', this.token);
 		return body;
+	}
+
+	/**
+	 * @typedef {Object} ClanSearchOptions
+	 * @property {string} [name] The name of the clan you want to search for.
+	 * @property {number} [score] The score of the clan you want to search for.
+	 * @property {number} [minMembers] Minimum members of the clan you want to search for.
+	 * @property {number} [maxMembers] Maximum members of the clan you want to search for.
+	 */
+
+	/**
+	 * search for a clan with some query options.
+	 * @since 2.0.0
+	 * @param {ClanSearchOptions} options The options which you want the clan to match.
+	 * @returns {Promise<Array<Clan>>} array of clans matching the criteria.
+	 */
+	async searchClan(options = {}) {
+		if (!options.name && !options.score && !options.minMembers && !options.maxMembers) throw new TypeError('You must provide at least one query string parameters to see results.');
+
+		const queries = [];
+		if (options.name) {
+			if (typeof options.name !== 'string') throw new TypeError('Name property must be a string.');
+			queries.push(`name=${options.name}`);
+		}
+		if (options.score) {
+			if (typeof options.score !== 'number') throw new TypeError('Score property must be a number.');
+			queries.push(`score=${options.score}`);
+		}
+		if (options.minMembers) {
+			if (typeof options.minMembers !== 'number') throw new TypeError('minMembers property must be a number.');
+			queries.push(`minMembers=${options.minMembers}`);
+		}
+		if (options.maxMembers) {
+			if (typeof options.maxMembers !== 'number') throw new TypeError('maxMembers property must be a number.');
+			queries.push(`maxMembers=${options.maxMembers}`);
+		}
+
+		const { body } = await get(`http://api.cr-api.com/clan/search?${queries.join('&')}`)
+			.set('auth', this.token);
+		const result = body.map(clan => new Clan(clan));
+		return result;
 	}
 
 	/**
