@@ -5,9 +5,6 @@ const Card = require('./card');
  */
 class Player {
 
-	/**
-     * @param {Object} rawPlayer The raw player data response from the API.
-     */
 	constructor(rawPlayer) {
 		this._patch(rawPlayer);
 

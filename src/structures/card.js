@@ -3,9 +3,6 @@
  */
 class Card {
 
-	/**
-     * @param {Object} cardRaw The raw card response from the API.
-     */
 	constructor(cardRaw) {
 		/**
          * This card's name

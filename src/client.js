@@ -1,5 +1,6 @@
 const { get } = require('snekfetch');
 const Player = require('./structures/player');
+const Clan = require('./structures/clan');
 
 /**
  * The client for handling everything.
@@ -77,6 +78,7 @@ class Client {
      */
 	async getPlayer(tag, options = {}) {
 		if (!tag) throw new TypeError('Invalid usage! Must provide the tag');
+		if (typeof tag !== 'string') throw new TypeError('Tag must be string');
 
 		const verifiedTag = this.verifyTag(tag);
 		if (!verifiedTag) throw new TypeError(`The tag you provided has some invalid character. Make sure it contains only the following characters: "${this.tagCharacters}"`);
@@ -89,6 +91,30 @@ class Client {
 			.set('auth', this.token);
 		const player = new Player(body);
 		return player;
+	}
+
+	/**
+     * get the clan data from the api with the tag
+     * @since 2.0.0
+     * @param {string} tag The clan tag to get the data for.
+     * @param {RequestOptions} options The options to be passed for customized result.
+     * @returns {Promise<?Clan>} the arranged clan data.
+     */
+	async getClan(tag, options = {}) {
+		if (!tag) throw new TypeError('Invalid usage! Must provide the tag');
+		if (typeof tag !== 'string') throw new TypeError('Tag must be string');
+
+		const verifiedTag = this.verifyTag(tag);
+		if (!verifiedTag) throw new TypeError(`The tag you provided has some invalid character. Make sure it contains only the following characters: "${this.tagCharacters}"`);
+
+		if (options.keys && options.exclude) throw new TypeError('You can only request with either Keys or Exclude.');
+		if (options.keys && !options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
+		if (options.exclude && !options.exclude.length) throw new TypeError('Make sure the exclude argument you pass is an array.');
+
+		const { body } = await get(`http://api.cr-api.com/clan/${verifiedTag}${options.keys ? `?keys=${options.keys.join(',')}` : ''}${options.exclude ? `?exclude=${options.exclude.join(',')}` : ''}`)
+			.set('auth', this.token);
+		const clan = new Clan(body);
+		return clan;
 	}
 
 	/**
