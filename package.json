@@ -15,5 +15,8 @@
     "cr-api"
   ],
   "author": "Froosty",
-  "license": "GPLv3"
+  "license": "GPLv3",
+  "dependencies": {
+    "eslint": "^4.15.0"
+  }
 }
