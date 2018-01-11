@@ -1,1 +1,4 @@
-module.exports = { Client: require('./src/client') };
+module.exports = {
+	Client: require('./src/client'),
+	Tournament: require('./src/tournament')
+};
