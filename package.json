@@ -1,0 +1,19 @@
+{
+  "name": "croyale",
+  "version": "2.0.0",
+  "description": "An easy  asynchronours wrapper to interact with cr-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gituhb.com/TheLearneer/croyale"
+  },
+  "keywords": [
+    "croyale",
+    "cr-api"
+  ],
+  "author": "Froosty",
+  "license": "GPLv3"
+}
