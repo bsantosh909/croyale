@@ -118,6 +118,32 @@ class Client {
 	}
 
 	/**
+	 * get top 200 players (global or specific location).
+	 * @since 2.0.0
+	 * @param {string} locationKey The specific location to get the top players of.
+	 * @returns {Promise<Array<Object>>} array of top 200 players.
+	 */
+	async getTopPlayers(locationKey) {
+		if (typeof locationKey !== 'string') throw new TypeError('Location key must be a string');
+		const { body } = await get(`http://api.cr-api.com/top/players${locationKey ? `/${locationKey}` : ''}`)
+			.set('auth', this.token);
+		return body;
+	}
+
+	/**
+	 * get top 200 clans (global or specified location).
+	 * @since 2.0.0
+	 * @param {string} locationKey The specific location to get the top clans of.
+	 * @returns {Promise<Array<Object>>} array of top 200 clans.
+	 */
+	async getTopClans(locationKey) {
+		if (typeof locationKey !== 'string') throw new TypeError('Location key must be a string');
+		const { body } = await get(`http://api.cr-api.com/top/clans${locationKey ? `/${locationKey}` : ''}`)
+			.set('auth', this.token);
+		return body;
+	}
+
+	/**
      * @typedef {string} APIVersion
      */
 
