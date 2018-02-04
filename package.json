@@ -17,7 +17,9 @@
   "author": "Froosty",
   "license": "GPLv3",
   "dependencies": {
-    "eslint": "^4.15.0",
     "snekfetch": "^3.6.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.17.0"
   }
 }

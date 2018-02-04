@@ -1,6 +1,7 @@
 const { get } = require('snekfetch');
 const Player = require('./structures/player');
 const Clan = require('./structures/clan');
+const Tournament = require('./structures/tournament');
 
 /**
  * The client for handling everything.
@@ -19,7 +20,7 @@ class Client {
 	 * @param {string} token The token to interact with the API.
 	 */
 	constructor(token) {
-		if (!token) throw new TypeError('Token is an essential component to interact with the API. Make sure to provide it.');
+		if (!token) throw new Error('Token is an essential component to interact with the API. Make sure to provide it.');
 
 		/**
 		 * The token provided
@@ -30,8 +31,8 @@ class Client {
 
 		/**
 		 * The valid characters for any tag
-		 * @since 2.0.0
 		 * @type {string}
+		 * @private
 		 */
 		this.tagCharacters = '0289PYLQGRJCUV';
 	}
@@ -65,7 +66,7 @@ class Client {
      * @since 2.0.0
      * @param {string} tag The player tag to get the data for.
      * @param {RequestOptions} options The options to be passed for customized result.
-     * @returns {Promise<?Player>} the arranged player data.
+     * @returns {Promise<Player>} the arranged player data.
      * @example
      * API.getPlayer('CVLQ2GV8', {
      *  keys: ['name']
@@ -76,15 +77,15 @@ class Client {
      *  .catch(console.error);
      */
 	async getPlayer(tag, options = {}) {
-		if (!tag) throw new TypeError('Invalid usage! Must provide the tag');
-		if (typeof tag !== 'string') throw new TypeError('Tag must be string');
+		if (!tag) throw new Error('Invalid usage! Must provide the tag');
+		if (typeof tag !== 'string') throw new Error('Tag must be string');
 
 		const verifiedTag = this.verifyTag(tag);
-		if (!verifiedTag) throw new TypeError(`The tag you provided has some invalid character. Make sure it contains only the following characters: "${this.tagCharacters}"`);
+		if (!verifiedTag) throw new Error(`The tag you provided has some invalid character. Make sure it contains only the following characters: "${this.tagCharacters}"`);
 
-		if (options.keys && options.exclude) throw new TypeError('You can only request with either Keys or Exclude.');
-		if (options.keys && !options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
-		if (options.exclude && !options.exclude.length) throw new TypeError('Make sure the exclude argument you pass is an array.');
+		if (options.keys && options.exclude) throw new Error('You can only request with either Keys or Exclude.');
+		if (options.keys && !options.keys.length) throw new Error('Make sure the keys argument you pass is an array.');
+		if (options.exclude && !options.exclude.length) throw new Error('Make sure the exclude argument you pass is an array.');
 
 		const { body } = await get(`http://api.cr-api.com/player/${verifiedTag}${options.keys ? `?keys=${options.keys.join(',')}` : ''}${options.exclude ? `?exclude=${options.exclude.join(',')}` : ''}`)
 			.set('auth', this.token);
@@ -97,18 +98,18 @@ class Client {
      * @since 2.0.0
      * @param {string} tag The clan tag to get the data for.
      * @param {RequestOptions} options The options to be passed for customized result.
-     * @returns {Promise<?Clan>} the arranged clan data.
+     * @returns {Promise<Clan>} the arranged clan data.
      */
 	async getClan(tag, options = {}) {
-		if (!tag) throw new TypeError('Invalid usage! Must provide the tag');
-		if (typeof tag !== 'string') throw new TypeError('Tag must be string');
+		if (!tag) throw new Error('Invalid usage! Must provide the tag');
+		if (typeof tag !== 'string') throw new Error('Tag must be string');
 
 		const verifiedTag = this.verifyTag(tag);
-		if (!verifiedTag) throw new TypeError(`The tag you provided has some invalid character. Make sure it contains only the following characters: "${this.tagCharacters}"`);
+		if (!verifiedTag) throw new Error(`The tag you provided has some invalid character. Make sure it contains only the following characters: "${this.tagCharacters}"`);
 
-		if (options.keys && options.exclude) throw new TypeError('You can only request with either Keys or Exclude.');
-		if (options.keys && !options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
-		if (options.exclude && !options.exclude.length) throw new TypeError('Make sure the exclude argument you pass is an array.');
+		if (options.keys && options.exclude) throw new Error('You can only request with either Keys or Exclude.');
+		if (options.keys && !options.keys.length) throw new Error('Make sure the keys argument you pass is an array.');
+		if (options.exclude && !options.exclude.length) throw new Error('Make sure the exclude argument you pass is an array.');
 
 		const { body } = await get(`http://api.cr-api.com/clan/${verifiedTag}${options.keys ? `?keys=${options.keys.join(',')}` : ''}${options.exclude ? `?exclude=${options.exclude.join(',')}` : ''}`)
 			.set('auth', this.token);
@@ -120,10 +121,10 @@ class Client {
 	 * get top 200 players (global or specific location).
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top players of.
-	 * @returns {Promise<Array<Object>>} array of top 200 players.
+	 * @returns {Promise<Array<Player>>} array of top 200 players.
 	 */
 	async getTopPlayers(locationKey) {
-		if (typeof locationKey !== 'string') throw new TypeError('Location key must be a string');
+		if (typeof locationKey !== 'string') throw new Error('Location key must be a string');
 		const { body } = await get(`http://api.cr-api.com/top/players${locationKey ? `/${locationKey}` : ''}`)
 			.set('auth', this.token);
 		return body;
@@ -133,10 +134,10 @@ class Client {
 	 * get top 200 clans (global or specified location).
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top clans of.
-	 * @returns {Promise<Array<Object>>} array of top 200 clans.
+	 * @returns {Promise<Array<Clan>>} array of top 200 clans.
 	 */
 	async getTopClans(locationKey) {
-		if (typeof locationKey !== 'string') throw new TypeError('Location key must be a string');
+		if (typeof locationKey !== 'string') throw new Error('Location key must be a string');
 		const { body } = await get(`http://api.cr-api.com/top/clans${locationKey ? `/${locationKey}` : ''}`)
 			.set('auth', this.token);
 		return body;
@@ -157,23 +158,23 @@ class Client {
 	 * @returns {Promise<Array<Clan>>} array of clans matching the criteria.
 	 */
 	async searchClan(options = {}) {
-		if (!options.name && !options.score && !options.minMembers && !options.maxMembers) throw new TypeError('You must provide at least one query string parameters to see results.');
+		if (!options.name && !options.score && !options.minMembers && !options.maxMembers) throw new Error('You must provide at least one query string parameters to see results.');
 
 		const queries = [];
 		if (options.name) {
-			if (typeof options.name !== 'string') throw new TypeError('Name property must be a string.');
+			if (typeof options.name !== 'string') throw new Error('Name property must be a string.');
 			queries.push(`name=${options.name}`);
 		}
 		if (options.score) {
-			if (typeof options.score !== 'number') throw new TypeError('Score property must be a number.');
+			if (typeof options.score !== 'number') throw new Error('Score property must be a number.');
 			queries.push(`score=${options.score}`);
 		}
 		if (options.minMembers) {
-			if (typeof options.minMembers !== 'number') throw new TypeError('minMembers property must be a number.');
+			if (typeof options.minMembers !== 'number') throw new Error('minMembers property must be a number.');
 			queries.push(`minMembers=${options.minMembers}`);
 		}
 		if (options.maxMembers) {
-			if (typeof options.maxMembers !== 'number') throw new TypeError('maxMembers property must be a number.');
+			if (typeof options.maxMembers !== 'number') throw new Error('maxMembers property must be a number.');
 			queries.push(`maxMembers=${options.maxMembers}`);
 		}
 
@@ -190,7 +191,7 @@ class Client {
 	/**
      * get the current version of the api
      * @since 2.0.0
-     * @returns {Promise<?APIVersion>} the api version.
+     * @returns {Promise<APIVersion>} the api version.
      * @example
      * API.getVersion()
      *  .then(result => {
@@ -200,6 +201,18 @@ class Client {
 	async getVersion() {
 		const { text } = await get('http://api.cr-api.com/version');
 		return text;
+	}
+
+	/**
+	 * get a list of open tournaments
+	 * @since 2.0.0
+	 * @returns {Promise<Array<Tournament>>} list of open tournaments.
+	 */
+	async getOpenTournaments() {
+		const { body } = await get('http://api.cr-api.com/tournaments/open')
+			.set('auth', this.token);
+		const tournies = body.map(tourney => new Tournament(tourney));
+		return tournies;
 	}
 
 }
