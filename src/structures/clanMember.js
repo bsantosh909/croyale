@@ -1,5 +1,5 @@
 /**
- * Represents a Clan Member.
+ * The Clash Royale Clan Member.
  */
 class ClanMember {
 

@@ -1,5 +1,5 @@
 /**
- * Represents a Clash Royale card.
+ * A Clash Royale card.
  */
 class Card {
 

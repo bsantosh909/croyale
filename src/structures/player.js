@@ -1,7 +1,7 @@
 const Card = require('./card');
 
 /**
- * The Player data response by the wrapper
+ * The Clash Royale Player
  */
 class Player {
 

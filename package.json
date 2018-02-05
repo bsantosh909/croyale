@@ -4,7 +4,8 @@
   "description": "An easy  asynchronours wrapper to interact with cr-api",
   "main": "index.js",
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node test/test.js",
+    "docs": "./node_modules/.bin/jsdoc --configure docs.json"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,8 @@
     "snekfetch": "^3.6.1"
   },
   "devDependencies": {
-    "eslint": "^4.17.0"
+    "eslint": "^4.17.0",
+    "jsdoc": "^3.5.5",
+    "tui-jsdoc-template": "^1.2.2"
   }
 }

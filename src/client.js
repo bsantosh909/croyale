@@ -48,9 +48,9 @@ class Client {
 	 * @param {string} tag The tag that is to be checked.
 	 * @returns {tag} the verified tag.
      * @example
-     * let tag = API.verifyTag('CVLQ2GV8')
-     * if (tag) console.log('It is a tag with proper characters.')
-     * else console.error('The tag has invalid charactrs.')
+     * let tag = API.verifyTag('CVLQ2GV8');
+     * if (tag) console.log('It is a tag with proper characters.');
+     * else console.error('The tag has invalid charactrs.');
 	 */
 	verifyTag(tag) {
 		if (!tag) return false;
@@ -99,6 +99,14 @@ class Client {
      * @param {string} tag The clan tag to get the data for.
      * @param {RequestOptions} options The options to be passed for customized result.
      * @returns {Promise<Clan>} the arranged clan data.
+	 * @example
+	 * API.getClan('2CCCP', {
+	 *  keys: ['name']
+	 * })
+	 *  .then(clan => {
+	 *    console.log(`The clan's name is ${clan.name}`);
+	 *  })
+	 *  .catch(console.error);
      */
 	async getClan(tag, options = {}) {
 		if (!tag) throw new Error('Invalid usage! Must provide the tag');
@@ -119,6 +127,7 @@ class Client {
 
 	/**
 	 * get top 200 players (global or specific location).
+	 * Have a look at cr-api-data/json/regions.json for the full list of acceptable keys.
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top players of.
 	 * @returns {Promise<Array<Player>>} array of top 200 players.
@@ -132,6 +141,7 @@ class Client {
 
 	/**
 	 * get top 200 clans (global or specified location).
+	 * Have a look at cr-api-data/json/regions.json for the full list of acceptable keys.
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top clans of.
 	 * @returns {Promise<Array<Clan>>} array of top 200 clans.
@@ -156,6 +166,15 @@ class Client {
 	 * @since 2.0.0
 	 * @param {ClanSearchOptions} options The options which you want the clan to match.
 	 * @returns {Promise<Array<Clan>>} array of clans matching the criteria.
+	 * @example
+	 * API.searchClan({
+	 *  name : 'ABC',
+	 *  minMembers : 45
+	 * })
+	 *  .then(clans => {
+	 *    console.log(`${clans.length} clans found with the criteria you set.`);
+	 *  })
+	 *  .catch(console.error);
 	 */
 	async searchClan(options = {}) {
 		if (!options.name && !options.score && !options.minMembers && !options.maxMembers) throw new Error('You must provide at least one query string parameters to see results.');
@@ -186,6 +205,7 @@ class Client {
 
 	/**
      * @typedef {string} APIVersion
+	 * The current version of the API.
      */
 
 	/**
@@ -195,8 +215,9 @@ class Client {
      * @example
      * API.getVersion()
      *  .then(result => {
-     *    console.log(`The Current API version is ${result}`)
+     *    console.log(`The Current API version is ${result}`);
      *  })
+	 *  .catch(console.error);
      */
 	async getVersion() {
 		const { text } = await get('http://api.cr-api.com/version');
@@ -207,6 +228,12 @@ class Client {
 	 * get a list of open tournaments
 	 * @since 2.0.0
 	 * @returns {Promise<Array<Tournament>>} list of open tournaments.
+	 * @example
+	 * API.getOpenTournaments()
+	 *  .then(tournies => {
+	 *    console.log(`The data of first open tournament is ${tournies[0]}`);
+	 *  })
+	 *  .catch(console.error);
 	 */
 	async getOpenTournaments() {
 		const { body } = await get('http://api.cr-api.com/tournaments/open')

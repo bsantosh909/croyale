@@ -1,7 +1,7 @@
 const ClanMember = require('./clanMember.js');
 
 /**
- * The Clan data response by the wrapper
+ * The Clash Royale clan
  */
 class Clan {
 
