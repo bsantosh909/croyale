@@ -57,8 +57,35 @@
 
 
     <section>
-        <article class="readme"><h1>croyale</h1><p>Asynchronous Wrapper to make your interaction super easy with <a href="http://cr-api.com/">cr-api</a></p>
-<h1>Information</h1><p>Its a WIP(Work In Progress) so as of now, it wont work as intended.</p></article>
+        <article class="readme"><h1>CRoyale</h1><p>Croyale is a powerful node.js module that allows you to interact with the <a href="http://cr-api.com/">cr-api</a> very easily.</p>
+<ul>
+<li>Object-oriented</li>
+<li>user friendly</li>
+<li>maximum coverage of the API</li>
+</ul>
+<h2>Installation</h2><p><strong>Node.js 8.0.0 or newer is required</strong></p>
+<p>Installing: <code>npm install croyale</code></p>
+<h2>Example usage</h2><pre class="prettyprint source lang-js"><code>const CRoyale = require('croyale');
+const client = new CRoyale.Client('token');
+
+client.getPlayer('CVLQ2GV8', { keys: ['name'] })
+    .then(player => {
+        console.log(`The player's name is ${player.name}`);
+    });</code></pre><h2>Credits</h2><ul>
+<li>The major credit for the existence of this wrapper goes to the developers of the api; SML and Selfish.</li>
+<li>In the mean time I would like to thank every individual people who have directly or indirectly helped me.</li>
+</ul>
+<h2>Links</h2><ul>
+<li><a href="https://thelearneer.github.io/croyale/">Documentation</a></li>
+<li><a href="https://discord.gg/6KvdGB3">CRoyale Discord server</a></li>
+<li><a href="http://discord.me/cr_api">cr-api Discord server</a></li>
+<li><a href="https://github.com/TheLearneer/croyale">GitHub</a></li>
+<li><a href="https://www.npmjs.com/package/croyale">NPM</a></li>
+</ul>
+<h2>Contributing</h2><p>Before creating an issue, please ensure that it hasn't already been reported/suggested, and double-check the
+<a href="https://thelearneer.github.io/croyale/">documentation</a>.<br>Make sure the changes you made aren't breaking things and are working fine if you'd like to submit a PR.</p>
+<h2>Help</h2><p>If you don't understand something in the documentation, you are experiencing problems, or you just need a gentle
+nudge in the right direction, please don't hesitate to join our official <a href="https://discord.gg/6KvdGB3">Croyale Server</a>.</p></article>
     </section>
 
 

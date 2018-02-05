@@ -1,7 +1,7 @@
 {
   "name": "croyale",
   "version": "2.0.0",
-  "description": "An easy  asynchronours wrapper to interact with cr-api",
+  "description": "An easy asynchronous wrapper to interact with cr-api",
   "main": "index.js",
   "scripts": {
     "test": "node test/test.js",
