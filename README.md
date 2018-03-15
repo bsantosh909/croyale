@@ -1,10 +1,10 @@
 # CRoyale
 
-Croyale is a powerful node.js module that allows you to interact with the [cr-api](http://cr-api.com/) very easily.
+Croyale is a powerful node.js module that allows you to interact with the [royale-api](http://royaleapi.com/) very easily.
 
 - Object-oriented
-- user friendly
-- maximum coverage of the API
+- User friendly
+- Maximum coverage of the API
 
 ## Installation
 **Node.js 8.0.0 or newer is required**
@@ -29,7 +29,7 @@ client.getPlayer('CVLQ2GV8', { keys: ['name'] })
 ## Links
 * [Documentation](https://thelearneer.github.io/croyale/)
 * [CRoyale Discord server](https://discord.gg/6KvdGB3)
-* [cr-api Discord server](http://discord.me/cr_api)
+* [RoyaleApi Discord server](http://discord.me/cr_api)
 * [GitHub](https://github.com/TheLearneer/croyale)
 * [NPM](https://www.npmjs.com/package/croyale)
 

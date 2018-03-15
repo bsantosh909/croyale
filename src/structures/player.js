@@ -9,7 +9,7 @@ class Player {
 		this._patch(rawPlayer);
 
 		/**
-         * The raw data from the cr-api.
+         * The raw data from the royaleapi.
          * @type {object}
          */
 		this.raw = rawPlayer;
