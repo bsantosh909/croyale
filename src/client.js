@@ -87,7 +87,7 @@ class Client {
 		if (options.keys && !options.keys.length) throw new Error('Make sure the keys argument you pass is an array.');
 		if (options.exclude && !options.exclude.length) throw new Error('Make sure the exclude argument you pass is an array.');
 
-		const { body } = await get(`http://api.cr-api.com/player/${verifiedTag}${options.keys ? `?keys=${options.keys.join(',')}` : ''}${options.exclude ? `?exclude=${options.exclude.join(',')}` : ''}`)
+		const { body } = await get(`http://api.royaleapi.com/player/${verifiedTag}${options.keys ? `?keys=${options.keys.join(',')}` : ''}${options.exclude ? `?exclude=${options.exclude.join(',')}` : ''}`)
 			.set('auth', this.token);
 		const player = new Player(body);
 		return player;
@@ -119,7 +119,7 @@ class Client {
 		if (options.keys && !options.keys.length) throw new Error('Make sure the keys argument you pass is an array.');
 		if (options.exclude && !options.exclude.length) throw new Error('Make sure the exclude argument you pass is an array.');
 
-		const { body } = await get(`http://api.cr-api.com/clan/${verifiedTag}${options.keys ? `?keys=${options.keys.join(',')}` : ''}${options.exclude ? `?exclude=${options.exclude.join(',')}` : ''}`)
+		const { body } = await get(`http://api.royaleapi.com/clan/${verifiedTag}${options.keys ? `?keys=${options.keys.join(',')}` : ''}${options.exclude ? `?exclude=${options.exclude.join(',')}` : ''}`)
 			.set('auth', this.token);
 		const clan = new Clan(body);
 		return clan;
@@ -127,28 +127,28 @@ class Client {
 
 	/**
 	 * get top 200 players (global or specific location).
-	 * Have a look at cr-api-data/json/regions.json for the full list of acceptable keys.
+	 * Have a look at royaleapi-data/json/regions.json for the full list of acceptable keys.
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top players of.
 	 * @returns {Promise<Array<Player>>} array of top 200 players.
 	 */
 	async getTopPlayers(locationKey) {
 		if (typeof locationKey !== 'string') throw new Error('Location key must be a string');
-		const { body } = await get(`http://api.cr-api.com/top/players${locationKey ? `/${locationKey}` : ''}`)
+		const { body } = await get(`http://api.royaleapi.com/top/players${locationKey ? `/${locationKey}` : ''}`)
 			.set('auth', this.token);
 		return body;
 	}
 
 	/**
 	 * get top 200 clans (global or specified location).
-	 * Have a look at cr-api-data/json/regions.json for the full list of acceptable keys.
+	 * Have a look at royaleapi-data/json/regions.json for the full list of acceptable keys.
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top clans of.
 	 * @returns {Promise<Array<Clan>>} array of top 200 clans.
 	 */
 	async getTopClans(locationKey) {
 		if (typeof locationKey !== 'string') throw new Error('Location key must be a string');
-		const { body } = await get(`http://api.cr-api.com/top/clans${locationKey ? `/${locationKey}` : ''}`)
+		const { body } = await get(`http://api.royaleapi.com/top/clans${locationKey ? `/${locationKey}` : ''}`)
 			.set('auth', this.token);
 		return body;
 	}
@@ -197,7 +197,7 @@ class Client {
 			queries.push(`maxMembers=${options.maxMembers}`);
 		}
 
-		const { body } = await get(`http://api.cr-api.com/clan/search?${queries.join('&')}`)
+		const { body } = await get(`http://api.royaleapi.com/clan/search?${queries.join('&')}`)
 			.set('auth', this.token);
 		const result = body.map(clan => new Clan(clan));
 		return result;
@@ -220,7 +220,7 @@ class Client {
 	 *  .catch(console.error);
      */
 	async getVersion() {
-		const { text } = await get('http://api.cr-api.com/version');
+		const { text } = await get('http://api.royaleapi.com/version');
 		return text;
 	}
 
@@ -236,7 +236,7 @@ class Client {
 	 *  .catch(console.error);
 	 */
 	async getOpenTournaments() {
-		const { body } = await get('http://api.cr-api.com/tournaments/open')
+		const { body } = await get('http://api.royaleapi.com/tournaments/open')
 			.set('auth', this.token);
 		const tournies = body.map(tourney => new Tournament(tourney));
 		return tournies;

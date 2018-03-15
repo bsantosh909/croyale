@@ -9,7 +9,7 @@ class Clan {
 		this._patch(rawClan);
 
 		/**
-         * The raw data from the cr-api.
+         * The raw data from the royaleapi.
          * @type {object}
          */
 		this.raw = rawClan;
