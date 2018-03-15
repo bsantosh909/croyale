@@ -12,6 +12,8 @@
         "plugins/markdown"
     ],
     "templates": {
+		"name": "CRoyale",
+		"footerText": "Welcome to CRoyale's documentation.",
         "cleverLinks": false,
         "monospaceLinks": true,
         "useLongnameInNav": false

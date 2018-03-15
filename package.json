@@ -1,6 +1,6 @@
 {
   "name": "croyale",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "An easy asynchronous wrapper to interact with royaleapi",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/TheLearneer/croyale"
+  },
+  "bugs": {
+    "url": "https://github.com/TheLearneer/croyale/issues"
   },
   "keywords": [
     "croyale",

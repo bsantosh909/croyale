@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: client.js | croyale</title>
+    <title>Source: client.js | CRoyale</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,9 +26,9 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">croyale</a></h1>
+        <h1><a href="index.html" class="link">CRoyale</a></h1>
         
-            <span class="version">v2.0.0</span>
+            <span class="version">v2.1.0</span>
         
     </div>
     <div class="search-container" id="search-container">
@@ -137,7 +137,7 @@ class Client {
 		if (options.keys &amp;&amp; !options.keys.length) throw new Error('Make sure the keys argument you pass is an array.');
 		if (options.exclude &amp;&amp; !options.exclude.length) throw new Error('Make sure the exclude argument you pass is an array.');
 
-		const { body } = await get(`http://api.cr-api.com/player/${verifiedTag}${options.keys ? `?keys=${options.keys.join(',')}` : ''}${options.exclude ? `?exclude=${options.exclude.join(',')}` : ''}`)
+		const { body } = await get(`http://api.royaleapi.com/player/${verifiedTag}${options.keys ? `?keys=${options.keys.join(',')}` : ''}${options.exclude ? `?exclude=${options.exclude.join(',')}` : ''}`)
 			.set('auth', this.token);
 		const player = new Player(body);
 		return player;
@@ -169,7 +169,7 @@ class Client {
 		if (options.keys &amp;&amp; !options.keys.length) throw new Error('Make sure the keys argument you pass is an array.');
 		if (options.exclude &amp;&amp; !options.exclude.length) throw new Error('Make sure the exclude argument you pass is an array.');
 
-		const { body } = await get(`http://api.cr-api.com/clan/${verifiedTag}${options.keys ? `?keys=${options.keys.join(',')}` : ''}${options.exclude ? `?exclude=${options.exclude.join(',')}` : ''}`)
+		const { body } = await get(`http://api.royaleapi.com/clan/${verifiedTag}${options.keys ? `?keys=${options.keys.join(',')}` : ''}${options.exclude ? `?exclude=${options.exclude.join(',')}` : ''}`)
 			.set('auth', this.token);
 		const clan = new Clan(body);
 		return clan;
@@ -177,28 +177,28 @@ class Client {
 
 	/**
 	 * get top 200 players (global or specific location).
-	 * Have a look at cr-api-data/json/regions.json for the full list of acceptable keys.
+	 * Have a look at royaleapi-data/json/regions.json for the full list of acceptable keys.
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top players of.
 	 * @returns {Promise&lt;Array&lt;Player>>} array of top 200 players.
 	 */
 	async getTopPlayers(locationKey) {
 		if (typeof locationKey !== 'string') throw new Error('Location key must be a string');
-		const { body } = await get(`http://api.cr-api.com/top/players${locationKey ? `/${locationKey}` : ''}`)
+		const { body } = await get(`http://api.royaleapi.com/top/players${locationKey ? `/${locationKey}` : ''}`)
 			.set('auth', this.token);
 		return body;
 	}
 
 	/**
 	 * get top 200 clans (global or specified location).
-	 * Have a look at cr-api-data/json/regions.json for the full list of acceptable keys.
+	 * Have a look at royaleapi-data/json/regions.json for the full list of acceptable keys.
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top clans of.
 	 * @returns {Promise&lt;Array&lt;Clan>>} array of top 200 clans.
 	 */
 	async getTopClans(locationKey) {
 		if (typeof locationKey !== 'string') throw new Error('Location key must be a string');
-		const { body } = await get(`http://api.cr-api.com/top/clans${locationKey ? `/${locationKey}` : ''}`)
+		const { body } = await get(`http://api.royaleapi.com/top/clans${locationKey ? `/${locationKey}` : ''}`)
 			.set('auth', this.token);
 		return body;
 	}
@@ -247,7 +247,7 @@ class Client {
 			queries.push(`maxMembers=${options.maxMembers}`);
 		}
 
-		const { body } = await get(`http://api.cr-api.com/clan/search?${queries.join('&amp;')}`)
+		const { body } = await get(`http://api.royaleapi.com/clan/search?${queries.join('&amp;')}`)
 			.set('auth', this.token);
 		const result = body.map(clan => new Clan(clan));
 		return result;
@@ -270,7 +270,7 @@ class Client {
 	 *  .catch(console.error);
      */
 	async getVersion() {
-		const { text } = await get('http://api.cr-api.com/version');
+		const { text } = await get('http://api.royaleapi.com/version');
 		return text;
 	}
 
@@ -286,7 +286,7 @@ class Client {
 	 *  .catch(console.error);
 	 */
 	async getOpenTournaments() {
-		const { body } = await get('http://api.cr-api.com/tournaments/open')
+		const { body } = await get('http://api.royaleapi.com/tournaments/open')
 			.set('auth', this.token);
 		const tournies = body.map(tourney => new Tournament(tourney));
 		return tournies;
@@ -306,7 +306,7 @@ module.exports = Client;
 
 <footer>
     <img class="logo" src="img/toast-ui.png" style="">
-    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+    <div class="footer-text">Welcome to CRoyale's documentation.</div>
 </footer>
 <script>prettyPrint();</script>
 <script src="scripts/jquery.min.js"></script>
