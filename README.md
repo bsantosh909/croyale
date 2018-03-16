@@ -11,6 +11,7 @@ Croyale is a powerful node.js module that allows you to interact with the [Royal
 **Node.js 8.0.0 or newer is required**
 
 Installing: `npm install croyale`
+If you are rather interested in installing the development version of this wrapper then Install it with: `npm install TheLearneer/croyale`
 
 ## Example usage
 ```js
