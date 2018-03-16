@@ -2,8 +2,6 @@
 logs
 
 # configuration files
-tasks.json
-.eslintrc.json
 
 # Dependency directories
 node_modules/

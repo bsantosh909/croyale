@@ -1,10 +1,11 @@
 # CRoyale
 
-Croyale is a powerful node.js module that allows you to interact with the [royaleapi](http://royaleapi.com/) very easily.
+Croyale is a powerful node.js module that allows you to interact with the [Royaleapi](http://royaleapi.com/) very easily.
 
 - Object-oriented
 - User friendly
 - Maximum coverage of the API
+- Error handling
 
 ## Installation
 **Node.js 8.0.0 or newer is required**
@@ -39,5 +40,4 @@ Before creating an issue, please ensure that it hasn't already been reported/sug
 Make sure the changes you made aren't breaking things and are working fine if you'd like to submit a PR.
 
 ## Help
-If you don't understand something in the documentation, you are experiencing problems, or you just need a gentle
-nudge in the right direction, please don't hesitate to join our official [Croyale Server](https://discord.gg/6KvdGB3).
+If you don't understand something in the documentation, you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our official [Croyale Server](https://discord.gg/6KvdGB3).

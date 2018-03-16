@@ -1,6 +1,6 @@
 {
   "name": "croyale",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "An easy asynchronous wrapper to interact with royaleapi",
   "main": "index.js",
   "scripts": {
