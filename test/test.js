@@ -1,9 +1,9 @@
 const { Client, version } = require('../index');
 
-const client = new Client('161fe46296a6457d8f967ddd5def17dbd91f0a67143b43caa8d6a6e04048ff67');
+const client = new Client('SECRET TOKEN HERE');
 
 console.log(version);
-// logs 2.2.0 as of now.
+// logs 2.2.1 as of now.
 
 client.getPlayer('CVLQ2GV8')
     .then(player => {
