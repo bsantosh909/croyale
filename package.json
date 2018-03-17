@@ -1,6 +1,6 @@
 {
   "name": "croyale",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "An easy asynchronous wrapper to interact with royaleapi",
   "main": "index.js",
   "scripts": {
@@ -15,14 +15,18 @@
     "url": "https://github.com/TheLearneer/croyale/issues"
   },
   "keywords": [
+	"supercell",
+	"clashroyale",
+	"clash-royale", 
+	"api",
     "croyale",
     "cr-api",
     "royaleapi"
   ],
   "author": "Froosty",
-  "license": "GPLv3",
+  "license": "MIT",
   "dependencies": {
-    "snekfetch": "^3.6.1"
+    "snekfetch": "^3.6.4"
   },
   "devDependencies": {
     "eslint": "^4.17.0",
