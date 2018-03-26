@@ -1,13 +1,12 @@
-const { Client, version } = require('../index');
+const { Client } = require('../index');
+const { key } = require('./key');
 
-const client = new Client('TOKEN HERE');
+const client = new Client(key);
 
-console.log(version);
-// logs 2.2.0 as of now.
-
-client.getPlayer('CVLQ2GV8')
+client.getPlayer('CLQ2GV8')
     .then(player => {
         console.log(player.tag);
+        // logs CVLQ2GV8
+        // ^ only if a valid key is provided in the client constructor!
     })
-    .catch(err => console.log(err));
-// logs CVLQ2GV8
+    .catch(err => console.log(err.message));

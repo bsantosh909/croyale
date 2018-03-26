@@ -1,6 +1,6 @@
 # CRoyale
 
-Croyale is a powerful node.js module that allows you to interact with the [Royaleapi](http://royaleapi.com/) very easily.
+Croyale is a powerful node.js module that allows you to interact with the [Royaleapi](http://docs.royaleapi.com/) very easily.
 
 - Object-oriented
 - User friendly

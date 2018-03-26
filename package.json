@@ -1,6 +1,6 @@
 {
   "name": "croyale",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "An easy asynchronous wrapper to interact with royaleapi",
   "main": "index.js",
   "scripts": {
@@ -15,12 +15,11 @@
     "url": "https://github.com/TheLearneer/croyale/issues"
   },
   "keywords": [
-	"supercell",
-	"clashroyale",
-	"clash-royale", 
-	"api",
-    "croyale",
-    "cr-api",
+	  "supercell",
+	  "clashroyale",
+	  "clash-royale", 
+	  "api",
+    "clash royale",
     "royaleapi"
   ],
   "author": "Froosty",

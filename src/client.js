@@ -9,18 +9,12 @@ const Tournament = require('./structures/tournament');
 class Client {
 
     /**
-     * @typedef {object} RequestOptions
-     * @property {Array<string>} [keys] The keys to get in the response from the API.
-     * @property {Array<string>} [exclude] The keys to exclude in the response from the API.
-     */
-
-    /**
 	 * Constructs the croyale client
 	 * @since 2.0.0
 	 * @param {string} token The token to interact with the API.
 	 */
     constructor(token) {
-        if (!token) throw new Error('Token is an essential component to interact with the API. Make sure to provide it.');
+        if (!token) throw new Error('Token is required to interact with the API. Make sure to provide it.');
 
         /**
 		 * The token provided
@@ -34,14 +28,14 @@ class Client {
 		 * @type {string}
 		 * @private
 		 */
-        this.tagCharacters = '0289PYLQGRJCUV';
+        this._tagCharacters = '0289PYLQGRJCUV';
 
         /**
 		 * The base URL of the API.
 		 * @type {string}
 		 * @private
 		 */
-        this.baseURL = 'http://api.royaleapi.com/';
+        this._baseURL = 'http://api.royaleapi.com/';
     }
 
     /**
@@ -55,18 +49,29 @@ class Client {
 	 * @param {string} tag The tag that is to be checked.
 	 * @returns {tag} the verified tag.
      * @example
-     * let tag = API.verifyTag('CVLQ2GV8');
-     * if (tag) console.log(`${tag} is a valid tag.`);
-     * else console.error('The tag has invalid charactrs.');
+     * try {
+     *     const verifiedTag = client.verifyTag('CVLQ2GV8');
+     *     console.log(`${verifiedTag} is a valid tag.`)
+     * } catch (error) {
+     *     console.log(error.message);
+     * }
 	 */
     verifyTag(tag) {
-        if (!tag) return false;
+        if (!tag) throw new Error('Invalid usage! Must provide the tag');
+        if (typeof tag !== 'string') throw new Error('Tag must be string');
         tag = tag.toUpperCase().replace('#', '').replace(/O/g, '0');
         for (var i = 0; i < tag.length; i++) {
-            if (!this.tagCharacters.includes(tag[i])) return false;
+            if (!this._tagCharacters.includes(tag[i])) throw new Error(`The tag you provided has some invalid character. Make sure it contains only the following characters: "${this._tagCharacters}"`);
         }
         return tag;
     }
+
+    /**
+     * @typedef {object} RequestOptions
+     * @property {Array<string>} [keys] The keys to get in the response from the API.
+     * @property {Array<string>} [exclude] The keys to exclude in the response from the API.
+     * @memberof Client
+     */
 
     /**
 	 * The base funtion that makes all the necessary API calls.
@@ -78,16 +83,14 @@ class Client {
 	 * @private
 	 */
     _get(endpoint, options = {}) {
-        return get(`${this.baseURL}${endpoint}`)
+        return get(`${this._baseURL}${endpoint}`)
             .query(options)
             .set('auth', this.token)
-            .then(res => res.body)
-            .catch(error => { throw `There was a error while trying to get Information from the API: ${error}`; });
+            .then(res => res.body);
     }
 
     /**
      * get the player data from the api with the tag
-	 * @async
      * @since 2.0.0
      * @param {string} tag The player tag to get the data for.
      * @param {RequestOptions} options The options to be passed for customized result.
@@ -99,31 +102,28 @@ class Client {
      *  .then(player => {
      *    console.log(`The Player's name is ${player.name}`);
      *  })
-     *  .catch(console.error);
+     *  .catch(error => console.log(error.message));
      */
-    getPlayer(tag, options = {}) {
-        if (!tag) throw new Error('Invalid usage! Must provide the tag');
-        if (typeof tag !== 'string') throw new Error('Tag must be string');
+    async getPlayer(tag, options = {}) {
+        const verifiedTag = this.verifyTag(tag);
 
         // checking if the input for options are correct or not.
         if (options.keys && options.exclude) throw new TypeError('You can only request with either Keys or Exclude.');
-        if (options.keys && !options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
-        if (options.exclude && !options.exclude.length) throw new TypeError('Make sure the exclude argument you pass is an array.');
+        if (options.keys) {
+            if (!options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
+            options.keys = options.keys.join(', ');
+        }
+        if (options.exclude) {
+            if (!options.exclude.length) throw new TypeError('Make sure the exclude argument you pass is an array.');
+            options.exclude = options.exclude.join(',');
+        }
 
-        // making the query parameters ready
-        if (options.keys) options.keys = options.keys.join(', ');
-        if (options.exclude) options.exclude = options.exclude.join(',');
-
-        const verifiedTag = this.verifyTag(tag);
-        if (!verifiedTag) throw new Error(`The tag you provided has some invalid character. Make sure it contains only the following characters: "${this.tagCharacters}"`);
-
-        return this._get(`player/${verifiedTag}`, options)
-            .then(res => new Player(res));
+        const res = await this._get(`player/${verifiedTag}`, options);
+        return new Player(res);
     }
 
     /**
      * get the clan data from the api with the tag
-	 * @async
      * @since 2.0.0
      * @param {string} tag The clan tag to get the data for.
      * @param {RequestOptions} options The options to be passed for customized result.
@@ -135,50 +135,46 @@ class Client {
 	 *  .then(clan => {
 	 *    console.log(`The clan's name is ${clan.name}`);
 	 *  })
-	 *  .catch(console.error);
+	 *  .catch(error => console.log(error.message));
      */
-    getClan(tag, options = {}) {
-        if (!tag) throw new Error('Invalid usage! Must provide the tag');
-        if (typeof tag !== 'string') throw new Error('Tag must be string');
+    async getClan(tag, options = {}) {
+        const verifiedTag = this.verifyTag(tag);
 
         // checking if the input for options are correct or not.
         if (options.keys && options.exclude) throw new TypeError('You can only request with either Keys or Exclude.');
-        if (options.keys && !options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
-        if (options.exclude && !options.exclude.length) throw new TypeError('Make sure the exclude argument you pass is an array.');
+        if (options.keys) {
+            if (!options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
+            options.keys = options.keys.join(', ');
+        }
+        if (options.exclude) {
+            if (!options.exclude.length) throw new TypeError('Make sure the exclude argument you pass is an array.');
+            options.exclude = options.exclude.join(',');
+        }
 
-        // making the query parameters ready
-        if (options.keys) options.keys = options.keys.join(', ');
-        if (options.exclude) options.exclude = options.exclude.join(',');
-
-        const verifiedTag = this.verifyTag(tag);
-        if (!verifiedTag) throw new Error(`The tag you provided has some invalid character. Make sure it contains only the following characters: "${this.tagCharacters}"`);
-
-        return this._get(`clan/${verifiedTag}`, options)
-            .then(res => new Clan(res));
+        const res = await this._get(`clan/${verifiedTag}`, options);
+        return new Clan(res);
     }
 
     /**
 	 * get top 200 players (global or specific location).
-	 * Have a look at royaleapi-data/json/regions.json for the full list of acceptable keys.
-	 * @async
+	 * Have a look at https://royaleapi-data/json/regions.json for the full list of acceptable keys.
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top players of.
 	 * @returns {Promise<Array<Player>>} array of top 200 players.
 	 */
-    getTopPlayers(locationKey) {
+    async getTopPlayers(locationKey) {
         if (locationKey && typeof locationKey !== 'string') throw new Error('Location key must be a string');
         return this._get(`top/players${locationKey ? `/${locationKey}` : ''}`);
     }
 
     /**
 	 * get top 200 clans (global or specified location).
-	 * Have a look at royaleapi-data/json/regions.json for the full list of acceptable keys.
-	 * @async
+	 * Have a look at https://royaleapi-data/json/regions.json for the full list of acceptable keys.
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top clans of.
 	 * @returns {Promise<Array<Clan>>} array of top 200 clans.
 	 */
-    getTopClans(locationKey) {
+    async getTopClans(locationKey) {
         if (locationKey && typeof locationKey !== 'string') throw new Error('Location key must be a string');
         return this._get(`top/clans${locationKey ? `/${locationKey}` : ''}`);
     }
@@ -193,7 +189,6 @@ class Client {
 
     /**
 	 * search for a clan with some query options.
-	 * @async
 	 * @since 2.0.0
 	 * @param {ClanSearchOptions} options The options which you want the clan to match.
 	 * @returns {Promise<Array<Clan>>} array of clans matching the criteria.
@@ -207,26 +202,27 @@ class Client {
 	 *  })
 	 *  .catch(console.error);
 	 */
-    searchClan(options = {}) {
+    async searchClan(options = {}) {
+        if (typeof options !== 'object') throw new TypeError('dictionary must be an object.');
+
         if (!options.name && !options.score && !options.minMembers && !options.maxMembers) throw new Error('You must provide at least one query string parameters to see results.');
+        if (options.name && typeof options.name !== 'string') throw new TypeError('Name property must be a string.');
+        if (options.score && typeof options.score !== 'number') throw new TypeError('Score property must be a number.');
+        if (options.minMembers && typeof options.score !== 'number') throw new TypeError('minMembers property must be a number.');
+        if (options.maxMembers && typeof options.score !== 'number') throw new TypeError('maxMembers property must be a number.');
 
-        if (options.name && typeof options.name !== 'string') throw new Error('Name property must be a string.');
-        if (options.score && typeof options.score !== 'number') throw new Error('Score property must be a number.');
-        if (options.minMembers && typeof options.score !== 'number') throw new Error('minMembers property must be a number.');
-        if (options.maxMembers && typeof options.score !== 'number') throw new Error('maxMembers property must be a number.');
-
-        return this._get('clan/search', options)
-            .then(res => res.map(clan => new Clan(clan)));
+        const res = await this._get('clan/search', options);
+        return res.map(clan => new Clan(clan));
     }
 
     /**
      * @typedef {string} APIVersion
 	 * The current version of the API.
+     * @memberof Client
      */
 
     /**
      * get the current version of the api
-	 * @async
      * @since 2.0.0
      * @returns {Promise<APIVersion>} the api version.
      * @example
@@ -234,16 +230,15 @@ class Client {
      *  .then(result => {
      *    console.log(`The Current API version is ${result}`);
      *  })
-	 *  .catch(console.error);
+	 *  .catch(error => console.log(`Error: ${error.message}`));
      */
-    getVersion() {
-        return get('http://api.royaleapi.com/version')
-            .then(res => res.text);
+    async getVersion() {
+        const res = await get('http://api.royaleapi.com/version');
+        return res.text;
     }
 
     /**
 	 * get a list of open tournaments
-	 * @async
 	 * @since 2.0.0
 	 * @returns {Promise<Array<Tournament>>} list of open tournaments.
 	 * @example
@@ -253,9 +248,9 @@ class Client {
 	 *  })
 	 *  .catch(console.error);
 	 */
-    getOpenTournaments() {
-        return this._get('tournaments/open')
-            .then(res => res.map(tourney => new Tournament(tourney)));
+    async getOpenTournaments() {
+        const res = await this._get('tournaments/open');
+        return res.map(tourney => new Tournament(tourney));
     }
 
 }
