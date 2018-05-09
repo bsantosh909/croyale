@@ -1,9 +1,8 @@
 # Logs
 logs
+test/key.js
 
 # configuration files
-tasks.json
-.eslintrc.json
 
 # Dependency directories
 node_modules/

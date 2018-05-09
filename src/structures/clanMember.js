@@ -3,55 +3,55 @@
  */
 class ClanMember {
 
-	constructor(member) {
-		/**
+    constructor(member) {
+        /**
          * This member's name
          * @type {string}
          */
-		this.name = member.name;
+        this.name = member.name;
 
-		/**
+        /**
          * This member's tag
          * @type {string}
          */
-		this.tag = member.tag;
+        this.tag = member.tag;
 
-		/**
+        /**
          * This member's rank
          * @type {number}
          */
-		this.rank = member.rank;
+        this.rank = member.rank;
 
-		/**
+        /**
          * This member's role
          * @type {string}
          */
-		this.role = member.role;
+        this.role = member.role;
 
-		/**
+        /**
          * This member's level
          * @type {number}
          */
-		this.level = member.expLevel;
+        this.level = member.expLevel;
 
-		/**
+        /**
          * This member's trophies
          * @type {number}
          */
-		this.trophies = member.trophies;
+        this.trophies = member.trophies;
 
-		/**
+        /**
          * This member's clanChest crowns
          * @type {number}
          */
-		this.clanChestCrowns = member.clanChestCrowns;
+        this.clanChestCrowns = member.clanChestCrowns;
 
-		/**
+        /**
          * This member's donations
          * @type {number}
          */
-		this.donations = member.donations;
-	}
+        this.donations = member.donations;
+    }
 
 }
 
