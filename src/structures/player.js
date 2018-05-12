@@ -174,12 +174,12 @@ class Player {
             this.drawsPercent = data.games.drawsPercent;
         }
 
-        if (data.chestCycle) {
+        if (data.dataType) {
             /**
              * This player's upcoming chests
              * @type {Array<string>}
              */
-            this.upcomingChests = data.chestCycle.upcoming;
+            this.upcomingChests = data.upcoming;
 
             /**
              * This player's special chests
@@ -191,11 +191,11 @@ class Player {
              * @property {number} [giant] after how many chests is giant chest coming.
              */
             this.specialChests = {
-                superMagical: data.chestCycle.superMagical,
-                magical: data.chestCycle.magical,
-                legendary: data.chestCycle.legendary,
-                epic: data.chestCycle.epic,
-                giant: data.chestCycle.giant
+                superMagical: data.superMagical,
+                magical: data.magical,
+                legendary: data.legendary,
+                epic: data.epic,
+                giant: data.giant
             };
         }
 
