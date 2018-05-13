@@ -118,6 +118,19 @@ class Client {
             options.exclude = options.exclude.join(',');
         }
 
+        if (JSON.stringify(options).includes('chestCycle')) {
+            const res = await this._get(`player/${verifiedTag}/chests/`);
+            return new Player({
+                dataType: 'chestCycle',
+                upcoming: res.upcoming,
+                superMagical: res.superMagical,
+                magical: res.magical,
+                legendary: res.legendary,
+                epic: res.epic,
+                giant: res.giant
+            });
+        }
+
         const res = await this._get(`player/${verifiedTag}`, options);
         return new Player(res);
     }
