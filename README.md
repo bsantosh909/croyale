@@ -1,6 +1,6 @@
 # CRoyale
 
-Croyale is a powerful node.js module that allows you to interact with the [Royaleapi](http://docs.royaleapi.com/) very easily.
+Croyale is a powerful Node.js module that allows you to interact with the [RoyaleAPI](http://docs.royaleapi.com/) very easily.
 
 - Object-oriented
 - User friendly
@@ -10,8 +10,8 @@ Croyale is a powerful node.js module that allows you to interact with the [Royal
 ## Installation
 **Node.js 8.0.0 or newer is required**
 
-Installing: `npm install croyale`
-If you are rather interested in installing the development version of this wrapper then Install it with: `npm install TheLearneer/croyale`
+Installing: `npm install croyale` <br><br>
+If you are interested in installing the development version of this wrapper instead, then install it with: `npm install TheLearneer/croyale`
 
 ## Example usage
 ```js
@@ -26,7 +26,7 @@ client.getPlayer('CVLQ2GV8', { keys: ['name'] })
 ```
 ## Credits
 - The major credit for the existence of this wrapper goes to the developers of the api; SML and Selfish.
-- In the mean time I would like to thank every individual people who have directly or indirectly helped me.
+- In the meantime I would like to thank every individual person who have directly or indirectly helped me.
 
 ## Links
 * [Documentation](https://thelearneer.github.io/croyale/)
