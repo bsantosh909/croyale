@@ -31,7 +31,7 @@ client.getPlayer('CVLQ2GV8', { keys: ['name'] })
 ## Links
 * [Documentation](https://thelearneer.github.io/croyale/)
 * [CRoyale Discord server](https://discord.gg/6KvdGB3)
-* [RoyaleApi Discord server](http://discord.me/cr_api)
+* [RoyaleAPI Discord server](http://discord.me/cr_api)
 * [GitHub](https://github.com/TheLearneer/croyale)
 * [NPM](https://www.npmjs.com/package/croyale)
 
