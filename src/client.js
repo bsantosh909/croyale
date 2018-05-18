@@ -128,15 +128,15 @@ class Client {
      * @param {string} tag The player tag to get the data for.
      * @returns {Promise<Player>} The arranged player chest cycle data.
      * @example
-     * API.getChestCycle('CVLQ2GV8', {
+     * API.getPlayerChests('CVLQ2GV8', {
      *   })
      *   .then(chests => {
      *   console.log(`The Player's upcoming chests are ${chests.upcomingChests}`);
-     *   console.log(`The Player's next magical chest are in ${chests.specialChests.magical} chests`)
+     *   console.log(`The Player's next magical chest is in ${chests.specialChests.magical} chests`)
      *   })
      *   .catch(error => console.log(error.message));
      */
-    async getChestCycle(tag) {
+    async getPlayerChests(tag) {
         const verifiedTag = this.verifyTag(tag);
         const res = await this._get(`player/${verifiedTag}/chests/`);
         return new Player({
