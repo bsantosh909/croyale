@@ -184,11 +184,11 @@ class Player {
             /**
              * This player's special chests
              * @type {object}
-             * @property {number} [superMagical] after how many chests is superMagical chest coming.
-             * @property {number} [magical] after how many chests is magical chest coming.
-             * @property {number} [legendary] after how many chests is legendary chest coming.
-             * @property {number} [epic] after how many chests is epic chest coming.
-             * @property {number} [giant] after how many chests is giant chest coming.
+             * @property {number} [superMagical] After how many chests is superMagical chest coming.
+             * @property {number} [magical] After how many chests is magical chest coming.
+             * @property {number} [legendary] After how many chests is legendary chest coming.
+             * @property {number} [epic] After how many chests is epic chest coming.
+             * @property {number} [giant] After how many chests is giant chest coming.
              */
             this.specialChests = {
                 superMagical: data.chestCycle.superMagical,

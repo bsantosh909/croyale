@@ -4,12 +4,12 @@ const Clan = require('./structures/clan');
 const Tournament = require('./structures/tournament');
 
 /**
- * The client for fetching data from the RoyaleAPI.
+ * The client for fetching data from RoyaleAPI
  */
 class Client {
 
     /**
-	 * Constructs the croyale client
+	 * Constructs the Croyale client.
 	 * @since 2.0.0
 	 * @param {string} token The token to interact with the API.
 	 */
@@ -17,14 +17,14 @@ class Client {
         if (!token) throw new Error('Token is required to interact with the API. Make sure to provide it.');
 
         /**
-		 * The token provided
+		 * The token provided.
 		 * @since 2.0.0
 		 * @type {string}
 		 */
         this.token = token;
 
         /**
-		 * The valid characters for any tag
+		 * The valid characters for any tag.
 		 * @type {string}
 		 * @private
 		 */
@@ -44,10 +44,10 @@ class Client {
      */
 
     /**
-	 * check if the provided tag is a valid one.
+	 * Checks if the provided tag is a valid one.
 	 * @since 2.0.0
 	 * @param {string} tag The tag that is to be checked.
-	 * @returns {tag} the verified tag.
+	 * @returns {tag} The verified tag.
      * @example
      * try {
      *     const verifiedTag = client.verifyTag('CVLQ2GV8');
@@ -90,11 +90,11 @@ class Client {
     }
 
     /**
-     * get the player data from the api with the tag
+     * Gets the player data from the API with the provided tag.
      * @since 2.0.0
      * @param {string} tag The player tag to get the data for.
      * @param {RequestOptions} options The options to be passed for customized result.
-     * @returns {Promise<Player>} the arranged player data.
+     * @returns {Promise<Player>} The arranged player data.
      * @example
      * API.getPlayer('CVLQ2GV8', {
      *  keys: ['name']
@@ -107,7 +107,7 @@ class Client {
     async getPlayer(tag, options = {}) {
         const verifiedTag = this.verifyTag(tag);
 
-        // checking if the input for options are correct or not.
+        // Checking if the input for options are correct or not.
         if (options.keys && options.exclude) throw new TypeError('You can only request with either Keys or Exclude.');
         if (options.keys) {
             if (!options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
@@ -123,11 +123,40 @@ class Client {
     }
 
     /**
-     * get the clan data from the api with the tag
+     * Gets the player chest cycle data from the API with the provided tag.
+     * @since 2.0.0
+     * @param {string} tag The player tag to get the data for.
+     * @returns {Promise<Player>} The arranged player chest cycle data.
+     * @example
+     * API.getPlayerChests('CVLQ2GV8', {
+     *   })
+     *   .then(chests => {
+     *   console.log(`The Player's upcoming chests are ${chests.upcomingChests}`);
+     *   console.log(`The Player's next magical chest is in ${chests.specialChests.magical} chests`)
+     *   })
+     *   .catch(error => console.log(error.message));
+     */
+    async getPlayerChests(tag) {
+        const verifiedTag = this.verifyTag(tag);
+        const res = await this._get(`player/${verifiedTag}/chests/`);
+        return new Player({
+            chestCycle: {
+                upcoming: res.upcoming,
+                superMagical: res.superMagical,
+                magical: res.magical,
+                legendary: res.legendary,
+                epic: res.epic,
+                giant: res.giant
+            }
+        });
+    }
+
+    /**
+     * Gets the clan data from the API with the provided tag.
      * @since 2.0.0
      * @param {string} tag The clan tag to get the data for.
      * @param {RequestOptions} options The options to be passed for customized result.
-     * @returns {Promise<Clan>} the arranged clan data.
+     * @returns {Promise<Clan>} The arranged clan data.
 	 * @example
 	 * API.getClan('2CCCP', {
 	 *  keys: ['name']
@@ -156,11 +185,11 @@ class Client {
     }
 
     /**
-	 * get top 200 players (global or specific location).
+	 * Gets the top 200 players (global or specific location).
 	 * Have a look at https://royaleapi-data/json/regions.json for the full list of acceptable keys.
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top players of.
-	 * @returns {Promise<Array<Player>>} array of top 200 players.
+	 * @returns {Promise<Array<Player>>} Array of the top 200 players.
 	 */
     async getTopPlayers(locationKey) {
         if (locationKey && typeof locationKey !== 'string') throw new Error('Location key must be a string');
@@ -168,11 +197,11 @@ class Client {
     }
 
     /**
-	 * get top 200 clans (global or specified location).
+	 * Gets top 200 clans (global or specified location).
 	 * Have a look at https://royaleapi-data/json/regions.json for the full list of acceptable keys.
 	 * @since 2.0.0
 	 * @param {string} locationKey The specific location to get the top clans of.
-	 * @returns {Promise<Array<Clan>>} array of top 200 clans.
+	 * @returns {Promise<Array<Clan>>} Array of top 200 clans.
 	 */
     async getTopClans(locationKey) {
         if (locationKey && typeof locationKey !== 'string') throw new Error('Location key must be a string');
@@ -188,10 +217,10 @@ class Client {
 	 */
 
     /**
-	 * search for a clan with some query options.
+	 * Search for a clan with some query options.
 	 * @since 2.0.0
 	 * @param {ClanSearchOptions} options The options which you want the clan to match.
-	 * @returns {Promise<Array<Clan>>} array of clans matching the criteria.
+	 * @returns {Promise<Array<Clan>>} Array of clans matching the criteria.
 	 * @example
 	 * API.searchClan({
 	 *  name : 'ABC',
@@ -222,9 +251,9 @@ class Client {
      */
 
     /**
-     * get the current version of the api
+     * Get the current version of the API.
      * @since 2.0.0
-     * @returns {Promise<APIVersion>} the api version.
+     * @returns {Promise<APIVersion>} The API version.
      * @example
      * API.getVersion()
      *  .then(result => {
@@ -238,13 +267,13 @@ class Client {
     }
 
     /**
-	 * get a list of open tournaments
+	 * Gets a list of open tournaments.
 	 * @since 2.0.0
-	 * @returns {Promise<Array<Tournament>>} list of open tournaments.
+	 * @returns {Promise<Array<Tournament>>} List of open tournaments.
 	 * @example
 	 * API.getOpenTournaments()
 	 *  .then(tournies => {
-	 *    console.log(`The data of first open tournament is ${tournies[0]}`);
+	 *    console.log(`The data of the first open tournament is ${tournies[0]}`);
 	 *  })
 	 *  .catch(console.error);
 	 */
