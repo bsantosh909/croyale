@@ -123,6 +123,25 @@ class Client {
     }
 
     /**
+     * Gets the player battle history data from the API with the provided tag.
+     * @since 3.0.1
+     * @param {string} tag The player tag to get the data for.
+     * @returns {Promise<Player>} The arranged player data.
+     * @example
+     * API.getPlayerBattles('CVLQ2GV8', {
+     * })
+     *  .then(player => {
+     *    console.log(`The Player's past 25 battles are ${player.playerBattles[0]}`);
+     *  })
+     *  .catch(error => console.log(error.message));
+     */
+    async getPlayerBattles(tag) {
+        const verifiedTag = this.verifyTag(tag);
+        const res = await this._get(`player/${verifiedTag}/battles/`);
+        return new Player({ playerBattles: res });
+    }
+
+    /**
      * Gets the player chest cycle data from the API with the provided tag.
      * @since 2.0.0
      * @param {string} tag The player tag to get the data for.

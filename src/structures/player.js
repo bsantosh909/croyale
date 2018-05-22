@@ -199,6 +199,14 @@ class Player {
             };
         }
 
+        if (data.playerBattles) {
+            /**
+             * This player's past 25 battles
+             * @type {object<Array>}
+             */
+            this.playerBattles = data.playerBattles;
+        }
+
         if (data.leagueStatistics) {
             /**
              * This player's league statistics
@@ -229,14 +237,6 @@ class Player {
              * @type {Array<Card>}
              */
             this.cards = data.cards.map(card => new Card(card));
-        }
-
-        if (data.battles) {
-            /**
-             * This player's last few battls
-             * @type {object}
-             */
-            this.battles = data.battles;
         }
     }
 
