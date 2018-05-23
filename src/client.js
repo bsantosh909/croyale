@@ -204,6 +204,47 @@ class Client {
     }
 
     /**
+	 * @typedef {Object} ClanWarOptions
+	 * @property {string} [currentWar] Stats about the current war status of the clan.
+	 * @property {string} [warlog] Data of past wars the clan has participated in.
+	 */
+
+    /**
+     * Gets the clan's clan war data from the API with the provided tag.
+     * @since 3.0.2
+     * @param {string} tag The clan tag to get the data for.
+     * @param {ClanWarOptions} options The options to be passed for each war option.
+     * @returns {Promise<Clan>} The arranged clan data.
+	 * @example
+	 * API.getClanWarStats('2CCCP', {
+	 *  keys: ['warlog'] // You can only use one key at once as each returns vasty different results.
+     *                    // It is reccomended to not use the 'warlog' key option, as it is unnessecary other then after a war has ended.
+	 * })
+	 *  .then(clan => {
+	 *    console.log(clan.warLog[0]);
+	 *  })
+	 *  .catch(error => console.log(error.message));
+     */
+    async getClanWarStats(tag, options = {}) {
+        const verifiedTag = this.verifyTag(tag);
+
+        // Checking if the keys for options are correct or not.
+        console.log(options.keys);
+        if (options.keys) {
+            if (!options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
+            if (options.keys.length > 1) throw new TypeError('You can only use one option key at a time.');
+
+            if (options.keys[0] === 'currentWar') {
+                const res = await this._get(`clan/${verifiedTag}/war`);
+                return new Clan(res);
+            } else if (options.keys[0] === 'warlog') {
+                const res = await this._get(`clan/${verifiedTag}/warlog`);
+                return new Clan({ warLog: res });
+            }
+        }
+    }
+
+    /**
 	 * Gets the top 200 players (global or specific location).
 	 * Have a look at https://royaleapi-data/json/regions.json for the full list of acceptable keys.
 	 * @since 2.0.0
