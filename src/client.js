@@ -112,11 +112,11 @@ class Client {
         // Checking if the input for options are correct or not.
         if (options.keys && options.exclude) throw new TypeError('You can only request with either Keys or Exclude.');
         if (options.keys) {
-            if (typeof options.keys !== typeof this.arraySample) throw new TypeError('Make sure the keys argument you pass is an array.');
+            if (!Array.isArray(options.keys)) throw new TypeError('Make sure the keys argument you pass is an array.');
             options.keys = options.keys.join(', ');
         }
         if (options.exclude) {
-            if (typeof options.exclude !== typeof this.arraySample) throw new TypeError('Make sure the exclude argument you pass is an array.');
+            if (!Array.isArray(options.keys)) throw new TypeError('Make sure the exclude argument you pass is an array.');
             options.exclude = options.exclude.join(',');
         }
 
@@ -130,17 +130,17 @@ class Client {
      * @param {string} tag The player tag to get the data for.
      * @returns {Promise<Player>} The arranged player data.
      * @example
-     * API.getPlayerBattles('CVLQ2GV8', {
+     * API.battles('CVLQ2GV8', {
      * })
      *  .then(player => {
-     *    console.log(`The Player's past 25 battles are ${player.playerBattles[0]}`);
+     *    console.log(`The Player's last battle was ${player.battles[0]}`);
      *  })
      *  .catch(error => console.log(error.message));
      */
-    async getPlayerBattles(tag) {
+    async battles(tag) {
         const verifiedTag = this.verifyTag(tag);
         const res = await this._get(`player/${verifiedTag}/battles/`);
-        return new Player({ playerBattles: res });
+        return new Player({ battles: res });
     }
 
     /**
@@ -160,16 +160,7 @@ class Client {
     async getPlayerChests(tag) {
         const verifiedTag = this.verifyTag(tag);
         const res = await this._get(`player/${verifiedTag}/chests/`);
-        return new Player({
-            chestCycle: {
-                upcoming: res.upcoming,
-                superMagical: res.superMagical,
-                magical: res.magical,
-                legendary: res.legendary,
-                epic: res.epic,
-                giant: res.giant
-            }
-        });
+        return new Player({ chestCycle: res });
     }
 
     /**
@@ -193,11 +184,11 @@ class Client {
         // checking if the input for options are correct or not.
         if (options.keys && options.exclude) throw new TypeError('You can only request with either Keys or Exclude.');
         if (options.keys) {
-            if (typeof options.keys !== typeof this.arraySample) throw new TypeError('Make sure the keys argument you pass is an array.');
+            if (!Array.isArray(options.keys)) throw new TypeError('Make sure the keys argument you pass is an array.');
             options.keys = options.keys.join(', ');
         }
         if (options.exclude) {
-            if (!typeof options.exclude !== typeof this.arraySample) throw new TypeError('Make sure the exclude argument you pass is an array.');
+            if (!Array.isArray(options.keys)) throw new TypeError('Make sure the exclude argument you pass is an array.');
             options.exclude = options.exclude.join(',');
         }
 
@@ -207,8 +198,8 @@ class Client {
 
     /**
 	 * @typedef {Object} ClanWarOptions
-	 * @property {string} [currentWar] Stats about the current war status of the clan.
-	 * @property {string} [warlog] Data of past wars the clan has participated in.
+	 * @property {string} [warState] Stats about the current war status of the clan.
+	 * @property {string} [warLog] Data of past wars the clan has participated in.
 	 */
 
     /**
@@ -219,7 +210,7 @@ class Client {
      * @returns {Promise<Clan>} The arranged clan data.
 	 * @example
 	 * API.getClanWarStats('2CCCP', {
-	 *  keys: ['warlog'] // You can only use one key at once as each returns vasty different results.
+	 *  keys: ['warLog'] // You can only use one key at once as each returns vasty different results.
      *                    // It is reccomended to not use the 'warlog' key option, as it is unnessecary other then after a war has ended.
 	 * })
 	 *  .then(clan => {
@@ -233,18 +224,17 @@ class Client {
         // Checking if the keys for options are correct or not.
         if (options.keys) {
             if (options.keys) {
-                if (typeof options.keys !== typeof this.arraySample) throw new TypeError('Make sure the keys argument you pass is an array.');
+                if (!Array.isArray(options.keys)) throw new TypeError('Make sure the keys argument you pass is an array.');
             }
-            if (options.exclude) {
-                throw new TypeError('Exclude keys are not allowed on this method.');
-            }
+
+            if (options.exclude) throw new TypeError('Exclude keys are not allowed on this method.');
 
             if (options.keys.length > 1) throw new TypeError('You can only use one option key at a time.');
 
-            if (options.keys[0] === 'currentWar') {
+            if (options.keys[0] === 'warState') {
                 const res = await this._get(`clan/${verifiedTag}/war`);
-                return new Clan(res);
-            } else if (options.keys[0] === 'warlog') {
+                return new Clan({ warState: res });
+            } else if (options.keys[0] === 'warLog') {
                 const res = await this._get(`clan/${verifiedTag}/warlog`);
                 return new Clan({ warLog: res });
             }

@@ -199,12 +199,12 @@ class Player {
             };
         }
 
-        if (data.playerBattles) {
+        if (data.battles) {
             /**
              * This player's past 25 battles
              * @type {object<Array>}
              */
-            this.playerBattles = data.playerBattles;
+            this.battles = data.battles;
         }
 
         if (data.leagueStatistics) {

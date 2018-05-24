@@ -111,12 +111,12 @@ class Clan {
             this.members = data.members.map(mem => new ClanMember(mem));
         }
 
-        if (data.state) {
+        if (data.warState) {
             /**
 			 * This is the clan's current war status.
 			 * @type {Object}
 			 */
-            this.state = data.state;
+            this.warState = data.warState;
         }
 
         if (data.warLog) {
