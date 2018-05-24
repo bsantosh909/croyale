@@ -3,7 +3,7 @@ const { key } = require('./key');
 
 const client = new Client(key);
 
-client.getPlayer('CLQ2GV8')
+client.getPlayer('8QU0PCQ')
     .then(player => {
         console.log(player.tag);
         // logs CVLQ2GV8

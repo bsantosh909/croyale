@@ -52,7 +52,7 @@ class Clan {
 
         if (data.memberCount) {
             /**
-			 * This clan's member count
+			 * This clan's member count.
 			 * @type {number}
 			 */
             this.memberCount = data.memberCount;
@@ -60,7 +60,7 @@ class Clan {
 
         if (data.requiredScore) {
             /**
-			 * This clan's required score for a new member to join
+			 * This clan's required score for a new member to join.
 			 * @type {number}
 			 */
             this.requiredScore = data.requiredScore;
@@ -68,28 +68,15 @@ class Clan {
 
         if (data.donations) {
             /**
-			 * This clan's weekly donations
+			 * This clan's weekly donations.
 			 * @type {number}
 			 */
             this.donations = data.donations;
         }
 
-        if (data.clanChest) {
-            /**
-			 * @typedef {Object} clanChest
-			 * @property {string} [status] The current status of the clan chest.
-			 */
-
-            /**
-			 * This clans's chan Chest
-			 * @type {clanChest}
-			 */
-            this.clanChest = data.clanChest;
-        }
-
         if (data.badge) {
             /**
-			 * This clan's badge
+			 * This clan's badge.
 			 * @type {URL}
 			 */
             this.badge = data.badge.image;
@@ -99,12 +86,12 @@ class Clan {
             /**
 			 * @typedef {Object} location
 			 * @property {string} [name] The name of the location.
-			 * @property {boolean} [isCountry] whether the location is country or not.
-			 * @property {string} [code] the code of the location.
+			 * @property {boolean} [isCountry] Whether the location is country or not.
+			 * @property {string} [code] The code of the location.
 			 */
 
             /**
-			 * This clan's location
+			 * This clan's location.
 			 * @type {location}
 			 */
             this.location = data.location;
@@ -112,16 +99,32 @@ class Clan {
 
         if (data.members) {
             /**
-			 * This clan's leader
+			 * This clan's leader.
 			 * @type {ClanMember}
 			 */
             this.leader = new ClanMember(data.members.filter(mem => mem.role.toLowerCase() === 'leader')[0]);
 
             /**
-			 * This clan's all members
+			 * This is the list of all the clan's members.
 			 * @type {Array<ClanMember>}
 			 */
             this.members = data.members.map(mem => new ClanMember(mem));
+        }
+
+        if (data.warState) {
+            /**
+			 * This is the clan's current war status.
+			 * @type {Object}
+			 */
+            this.warState = data.warState;
+        }
+
+        if (data.warLog) {
+            /**
+			 * This is the clan's entire war history.
+			 * @type {Array}
+			 */
+            this.warLog = data.warLog;
         }
     }
 
