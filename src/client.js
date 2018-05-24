@@ -35,7 +35,9 @@ class Client {
 		 * @type {string}
 		 * @private
 		 */
-        this._baseURL = 'http://api.royaleapi.com/';
+        this._baseURL = 'https://api.royaleapi.com/';
+
+        this.arraySample = [];
     }
 
     /**
@@ -110,11 +112,11 @@ class Client {
         // Checking if the input for options are correct or not.
         if (options.keys && options.exclude) throw new TypeError('You can only request with either Keys or Exclude.');
         if (options.keys) {
-            if (!options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
+            if (typeof options.keys !== typeof this.arraySample) throw new TypeError('Make sure the keys argument you pass is an array.');
             options.keys = options.keys.join(', ');
         }
         if (options.exclude) {
-            if (!options.exclude.length) throw new TypeError('Make sure the exclude argument you pass is an array.');
+            if (typeof options.exclude !== typeof this.arraySample) throw new TypeError('Make sure the exclude argument you pass is an array.');
             options.exclude = options.exclude.join(',');
         }
 
@@ -191,11 +193,11 @@ class Client {
         // checking if the input for options are correct or not.
         if (options.keys && options.exclude) throw new TypeError('You can only request with either Keys or Exclude.');
         if (options.keys) {
-            if (!options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
+            if (typeof options.keys !== typeof this.arraySample) throw new TypeError('Make sure the keys argument you pass is an array.');
             options.keys = options.keys.join(', ');
         }
         if (options.exclude) {
-            if (!options.exclude.length) throw new TypeError('Make sure the exclude argument you pass is an array.');
+            if (!typeof options.exclude !== typeof this.arraySample) throw new TypeError('Make sure the exclude argument you pass is an array.');
             options.exclude = options.exclude.join(',');
         }
 
@@ -229,9 +231,14 @@ class Client {
         const verifiedTag = this.verifyTag(tag);
 
         // Checking if the keys for options are correct or not.
-        console.log(options.keys);
         if (options.keys) {
-            if (!options.keys.length) throw new TypeError('Make sure the keys argument you pass is an array.');
+            if (options.keys) {
+                if (typeof options.keys !== typeof this.arraySample) throw new TypeError('Make sure the keys argument you pass is an array.');
+            }
+            if (options.exclude) {
+                throw new TypeError('Exclude keys are not allowed on this method.');
+            }
+
             if (options.keys.length > 1) throw new TypeError('You can only use one option key at a time.');
 
             if (options.keys[0] === 'currentWar') {
@@ -292,7 +299,7 @@ class Client {
 	 *  .catch(console.error);
 	 */
     async searchClan(options = {}) {
-        if (typeof options !== 'object') throw new TypeError('dictionary must be an object.');
+        if (typeof options !== 'object') throw new TypeError('Dictionary must be an object.');
 
         if (!options.name && !options.score && !options.minMembers && !options.maxMembers) throw new Error('You must provide at least one query string parameters to see results.');
         if (options.name && typeof options.name !== 'string') throw new TypeError('Name property must be a string.');
@@ -322,7 +329,7 @@ class Client {
 	 *  .catch(error => console.log(`Error: ${error.message}`));
      */
     async getVersion() {
-        const res = await get('http://api.royaleapi.com/version');
+        const res = await get('https://api.royaleapi.com/version');
         return res.text;
     }
 

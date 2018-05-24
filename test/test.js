@@ -1,12 +1,12 @@
 const { Client } = require('../index');
-const { key } = require('./key');
+const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsImlkZW4iOiIxMDUwNzYzNTkxODg5Nzk3MTIiLCJtZCI6e30sImlhdCI6MTUyNTgyNzc5MH0.q5p1LrE7zrqtZaccXibDSx5bhnq-9S4DoM4vv0Atzd8';
 
 const client = new Client(key);
 
-client.getPlayer('8QU0PCQ')
+client.getPlayer('CVLQ2GV8', {
+    keys: ['name']
+})
     .then(player => {
-        console.log(player.tag);
-        // logs CVLQ2GV8
-        // ^ only if a valid key is provided in the client constructor!
+        console.log(`The Player's name is ${player.name}`);
     })
-    .catch(err => console.log(err.message));
+    .catch(error => console.log(error.message));
