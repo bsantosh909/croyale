@@ -2,9 +2,9 @@
   "name": "croyale",
   "version": "3.0.0",
   "description": "An easy asynchronous wrapper to interact with Royale API.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "node src/test/test.js"
+    "test": "node lib/test/test.js"
   },
   "repository": {
     "type": "git",
