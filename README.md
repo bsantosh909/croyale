@@ -11,7 +11,7 @@ _An easy to use Asynchronous wrapper to interact with [RoyaleAPI.com](https://do
 ## Installation
 _node.js 8.0.0 or newer is required_
 
-**Stable:** `npm install croyal`
+**Stable:** `npm install croyale`
 
 **Master:** `npm install TheLearneer/croyale`
 > master branch might contian some bugs, so if you are interested in bug free code then install stable, but if you are want to have the latest of the wrapper then install master branch.
