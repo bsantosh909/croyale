@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/TheLearneer/croyale#readme",
   "dependencies": {
-    "snekfetch": "^3.6.4"
+    "snekfetch": "^4.0.4"
   },
   "devDependencies": {
     "eslint": "^5.16.0"
