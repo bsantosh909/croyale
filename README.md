@@ -1,6 +1,12 @@
 # ![Logo](https://cdn.discordapp.com/attachments/400874862073217027/460950350728396800/940349250_edc3d38a-e1ce-48e6-a738-10dc3339e79f.png)
 _An easy to use Asynchronous wrapper to interact with [RoyaleAPI.com](https://docs.royaleapi.com)_
 
+---
+
+:warning: **IMPORTANT** :warning:
+
+RoyaleAPI.com has been shutdown by its developers. Time to use the official clash royale API.
+
 ## Features
 * Object Oriented
 * User friendly
